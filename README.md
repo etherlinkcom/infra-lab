@@ -12,8 +12,15 @@ You'll also need to set your environment variables in a `.env` file as in `.env.
 
 ## Quick Start
 
+First, to install dependencies and compile your contracts, you can run:
+
 ```bash
 npm install
 npx hardhat compile
+```
+
+Then, you can run whatever Typescript workflow you like under `scripts/` using:
+
+```bash
 npx hardhat run scripts/<YOUR_SCRIPT> --network <`etherlinkTestnet` or `bscTestnet`>
 ```
