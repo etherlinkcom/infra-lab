@@ -16,14 +16,4 @@ contract Pyth {
         PythStructs.Price memory priceStruct = pyth.getPriceUnsafe(ethUsdPriceId);
         return (priceStruct.price, priceStruct.expo, priceStruct.publishTime);
     }
-
-    function oneDollarInWei() public view returns (uint256 res) {
-        PythStructs.Price memory price = pyth.getPrice(ethUsdPriceId);
-    
-        uint256 ethPrice18Decimals = (uint256(uint64(price.price)) * (10 ** 18)) /
-        (10 ** uint8(uint32(-1 * price.expo)));
-        res = ((10 ** 18) * (10 ** 18)) / ethPrice18Decimals;
-    
-        return res;
-    }
 }
