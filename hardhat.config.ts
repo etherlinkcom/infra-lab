@@ -11,7 +11,7 @@ const config: HardhatUserConfig = {
   networks: {
     bscTestnet: {
       url: "https://bsc-testnet-rpc.publicnode.com",
-      accounts: ["0x203e370f64735dc8370557ad4b4d2980742af6459c23a1ac3def1eb08bfddedf"],
+      accounts: [privateKey],
     },
     etherlinkTestnet: {
       url: "https://node.ghostnet.etherlink.com",
