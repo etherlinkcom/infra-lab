@@ -1,6 +1,6 @@
-# Lab
+# The Infra Lab
 
-This is a repo for quickly testing dApps on Etherlink Testnet and ensuring identical functionality to BNB Testnet.
+This is a repo for quickly testing protocols and dApps on Etherlink Testnet and ensuring identical functionality to BNB Testnet.
 
 ## Setup
 
