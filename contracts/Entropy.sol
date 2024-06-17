@@ -8,7 +8,8 @@ contract Entropy is IEntropyConsumer {
     IEntropy entropy;
     address entropyProvider;
 
-    event RandomNumber(uint64 sequenceNumber);
+    event SequenceNumber(uint64 sequenceNumber);
+    event RandomNumber(uint randomNumber);
  
     constructor(address entropyAddress) {
         entropy = IEntropy(entropyAddress);
@@ -28,7 +29,7 @@ contract Entropy is IEntropyConsumer {
 
         sequenceNumber = entropy.requestWithCallback{value: requestFee}(entropyProvider, randomNumber);
 
-        emit RandomNumber(sequenceNumber);
+        emit SequenceNumber(sequenceNumber);
         return sequenceNumber;
     }
 
@@ -46,7 +47,7 @@ contract Entropy is IEntropyConsumer {
         address provider,
         bytes32 randomNumber
     ) internal override {
-        // Implement your callback logic here.
+        emit RandomNumber(uint(randomNumber));
     }
  
 }
