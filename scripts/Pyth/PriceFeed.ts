@@ -11,7 +11,7 @@ async function main() {
   } else {
     throw new Error(`Unsupported network: ${network.name}`);
   }
-  const PythFactory = await ethers.getContractFactory('Pyth')
+  const PythFactory = await ethers.getContractFactory('PriceFeed')
   const pythContract = await PythFactory.deploy(pythAddress)
   await pythContract.waitForDeployment()
   console.log("Contract deployed!! Address:", await pythContract.getAddress())
