@@ -3,7 +3,7 @@ import web3 from 'web3';
 import { eth } from "web3";
 
 async function main() {
-  const entropyContract = await ethers.getContractAt("Entropy", "0x21031182cc8b3C23e10F655aB23c7D9D22E3B7d7")
+  const entropyContract = await ethers.getContractAt("Entropy", "0x556CBf2f2cAac2781522c45fA9492Bcc6e343dB9")
 
   // Running getRandomNumber function
   const randomNumber = web3.utils.randomHex(32)
@@ -19,22 +19,22 @@ async function main() {
   console.log("tx hash:", txReceipt.hash)
 
   // Decode the logs
-  const eventSignature = web3.utils.keccak256("RandomNumber(uint64)");
-  const logs = txReceipt.logs.filter(log => log.topics[0] === eventSignature);
+  const eventSignature = web3.utils.keccak256("RandomNumber(uint256)");
+  const logs = txReceipt.logs.filter(log => log.topics[0] === "0xa4c85ab66677ced5caabbbba151714887944b9e0fee05f320e42a1b13a01fbc6");
 
   logs.forEach(log => {
     const decodedLog = eth.abi.decodeLog(
       [
         {
-          type: 'uint64',
-          name: 'sequenceNumber'
+          type: 'uint256',
+          name: 'randomNumber'
         }
       ],
       log.data,
       log.topics.slice(1)
     );
     
-    console.log(`Random Number: ${decodedLog.sequenceNumber}`);
+    console.log(`Random Number: ${decodedLog.randomNumber}`);
   });
 }
 
