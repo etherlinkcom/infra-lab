@@ -7,15 +7,28 @@ import { IEntropy } from "@pythnetwork/entropy-sdk-solidity/IEntropy.sol";
 contract Entropy is IEntropyConsumer {
     IEntropy entropy;
     address entropyProvider;
+
+    event RandomNumber(uint64 sequenceNumber);
  
     constructor(address entropyAddress) {
         entropy = IEntropy(entropyAddress);
         entropyProvider = entropy.getDefaultProvider();
     }
 
-    function getRandomNumber(bytes32 randomNumber) public returns (uint64 sequenceNumber) {
-        uint fee = entropy.getFee(entropyProvider);
-        sequenceNumber = entropy.requestWithCallback{value: fee}(entropyProvider, randomNumber);
+    function getFee() public view returns (uint fee) {
+        fee = entropy.getFee(entropyProvider);
+        return fee;
+    }
+
+    function getRandomNumber(bytes32 randomNumber) external payable returns (uint64 sequenceNumber) {
+        // get the required fee
+        uint128 requestFee = entropy.getFee(entropyProvider);
+        // check if the user has sent enough fees
+        if (msg.value < requestFee) revert("not enough fees");
+
+        sequenceNumber = entropy.requestWithCallback{value: requestFee}(entropyProvider, randomNumber);
+
+        emit RandomNumber(sequenceNumber);
         return sequenceNumber;
     }
 
