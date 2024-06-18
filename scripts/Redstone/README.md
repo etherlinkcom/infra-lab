@@ -5,7 +5,7 @@ There are two scripts in this directory:
 - `consumeData.ts`: test and print the price retrieve from each oracles
 - `deployDataConsumers.ts`: deploy the dataConsumer contracts, each one linked to a specific oracle and verified directly in the script
 
-The scripts are independent, and can be run in any order.
+You first need to deploy the contracts with the deploy script and then run the consume data test.
 
 ## Deploy the contracts
 
