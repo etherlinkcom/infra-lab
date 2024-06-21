@@ -18,9 +18,7 @@ npx hardhat run scripts/Pyth/PriceFeed.ts --network etherlinkTestnet
 The expected output looks as follows:
 
 ```bash
-Deploying contract...
-Contract deployed!! Address: 0xf985422846A9969a00E160C41A6268AcD3bB368a
-Current ETH/USD Price: 337841560500n e^ -8n | Publish Time: 1718392397
+Current BTC/USD Price: 6374310339340n e^ -8n | Publish Time: 1718961932
 ```
 
 ## Entropy Random Numbers
