@@ -18,8 +18,14 @@ npx hardhat run scripts/Pyth/PriceFeed.ts --network etherlinkTestnet
 The expected output looks as follows:
 
 ```bash
-Current BTC/USD Price: 6374310339340n e^ -8n | Publish Time: 1718961932
+Deploying contract...
+Contract deployed!! Address: 0x92cd987A893B53f22d8F552B913e0CF2A675C0a2
+Current BTC/USD Price: 6410018227334n e^ -8n | Publish Time: 1718964329
 ```
+
+> Note 🚨
+>
+> If you want the most up to date price, go to https://docs.pyth.network/price-feeds/api-reference/evm/update-price-feeds and get the example BTC/USD price data. You'll then need to use this in the `updateData` parameter dirctly in the `PriceFeed.ts` script!
 
 ## Entropy Random Numbers
 

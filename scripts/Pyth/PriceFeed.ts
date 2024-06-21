@@ -1,10 +1,26 @@
 import { ethers, network } from 'hardhat';
 
 async function main() {
-  const pythContract = await ethers.getContractAt("PriceFeed", "0xbEEf9Af60a2F4AD4aeCe2BB26c6219057c8A07c6")
+  // Deploying Pyth contract
+  console.log("Deploying contract...")
+  let pythAddress: string
+  if (network.name === 'bscTestnet') {
+    pythAddress = "0x5744Cbf430D99456a0A8771208b674F27f8EF0Fb";
+  } else if (network.name === 'etherlinkTestnet') {
+    pythAddress = "0x2880aB155794e7179c9eE2e38200202908C17B43";
+  } else {
+    throw new Error(`Unsupported network: ${network.name}`);
+  }
+  const PythFactory = await ethers.getContractFactory('PriceFeed')
+  const pythContract = await PythFactory.deploy(pythAddress)
+  await pythContract.waitForDeployment()
+  console.log("Contract deployed!! Address:", await pythContract.getAddress())
 
-  // Running getEthUsdPrice function
-  await pythContract.updateBtcUsdPrice({value: BigInt(2)})
+  // Running getBtcUsdPrice function
+  // To update the price, go to https://docs.pyth.network/price-feeds/api-reference/evm/update-price-feeds
+  // and replace the hex string in `updateData` with the given string by the "Latest BTC/USD update data" example.
+  const updateData = ["0x504e41550100000003b801000000040d001b5b5de4e01dcbd7a410461a2f3acfc7362e9533344b39abb3eda343318396490b93a6241c51d31ee256f53e1b5e84517ad4b1612e13102aa1a4c2290799f96a0102a0472bb44e34f41d4b33c9860f72c1de3bc5a78d30cba8f8ef583f9e57f79c0f2cc7f3c60c28f05e062534c64f9c656eb382dfc58c1164b2d67844e300ca9e83000348567586b38cd196973eb0fc9044366232716714169ba69e7950d0c706b9ad6a4464b27ced0641cd88c0b39986a9af1a99b5a6531ec2dab160e3e0ee0d1fee0800046431f59687c577854fa9d783a5d052179cbdb62c1d45f75f065d4a60cddaf05f2416ae461b45b167e06dfb00491b46151790926d186592fb000cf9aab782c7f601064e64b9a9989018455d2afb019defb97e9c205fb5d378ca817aadf87979ab3c7b7894b09b45f5ee7ba888846368451da087bc5b41f7fb3e64cc2f64722b6c8c2300096e52a79c9d1e570f5e534f30dd5f25ff6e8d82493b93bafdf498a43078dcdac90420d7acc98cb5648f097585a0217e500c67865f74b6a296f1304b79497b9e12000a6e18d8c4d7339d0cedbd0575a2c4a36fe780d3f7259a1196742919263b09b311409b5f759f25e8c20e1466041fd5ea78bae88f6571dc5a490389f9866c992509010be810418723a3b164221a9f86eb2c970f87314f29d49a3553530c290f36305b1c58e46edde3d74ef68aedd231e2a6b77df4f7969fd78e3c03dafe5ceea49af161000d15e1ce63ff1b469769544ccd10ec83caa7e9076e9efb446c6f497080b53b826d28ab195cbeef420d3e561042da43ada6c65879a3b13d7d10d5d8840cd4796808000eb6ff7c40f8068bb1f6c1ca845887e6022ae7cd8120e6fe5a8e04eec7eea9629e3f02a67e957209b45b5ebc83c58c1e18a59368de44e24a634849a08b53098fc0010f4f7d669ad1354930470f14a0ea3c3cdbd315d2266d1f1a63ad02868c3d565f53739f76317a6dfa0497474c45785f221361f2cdaebaccdfe71d042baf6b25804201103116fa39a8631dfcb52a947b90dd555d4e5c77ca6c16e6eb5a0ec58567cb18aa638dbdfc73aa5e938d82a1fb2c28e8d19a020e7a3b90695f60ef2de624fa6a63011281ba7b059d0975ce8ad74bfb4e4076a197f6b3d3b090160f67702c4a44eb28c7306902a47b6e23c206ce86f8c35588be11437c311b5e7e0b3652894b6ef90d9c006675506900000000001ae101faedac5851e32b9b23b5f9411a8c2bac4aae3ed4dd7b811dd1a72ea4aa710000000003d5f8090141555756000000000008e048a100002710c27f17eb99a5fe4e5ed6bff408c6a9969520903f01005500e62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43000005d472dc048600000001a0b03fa5fffffff800000000667550690000000066755068000005d39b0c1a60000000017510937c0aafc8174247130e68b0f507935a2309964ef94ea9fb8d5c7f43175ee6fe1c710aed13155c97903eed393f1012c031991fd7b1b2a0119dd94563ad9c1953d7784e4869828e24fbeea9d0b143d8d6fb1aaca2b324cb6fcdba3812336b38824b4e533fef3032d128b51215fcdc391e2f5ea2d97a4ff16d3d132f981d99fd4772749345f32be7a7d3c56e34e8faa3ab2dda1ab5c510af32b7c4d78967e31ae9eeac44fac89b65af2ea0c2cb4667ca5c3d18b1f43747dd10b57f5d8820790551c75878ae2241ea47c6145b"]
+  await pythContract.updateBtcUsdPrice(updateData, {value: BigInt(2)})
   const [price, expo, publishTime] = await pythContract.getBtcUsdPrice();
   console.log('Current BTC/USD Price:', price, 'e^', expo, '| Publish Time:', publishTime.toString());
 }
