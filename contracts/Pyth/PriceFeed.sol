@@ -16,7 +16,7 @@ contract PriceFeed {
         xtzUsdPriceId = bytes32(0x0affd4b8ad136a21d79bc82450a325ee12ff55a235abc242666e423b8bcffd03);
     }
 
-    function updateBtcUsdPrice(bytes[] memory updateData) external payable {
+    function updatePrice(bytes[] memory updateData) external payable {
         uint fee = 1;
         pyth.updatePriceFeeds{value: fee}(updateData);
     }
