@@ -8,7 +8,7 @@ You'll need to get gas tokens for both networks:
 - **BNB Testnet:** https://www.bnbchain.org/en/testnet-faucet
 - **Etherlink Testnet:** https://faucet.etherlink.com/
 
-You'll also need to set your environment variables in a `.env` file as in `.env.example`.
+You'll also need to set your environment variables as in `.env.example`. The easiest way to do this is to create a `.env` file in which you can copy the variables from `.env.example`.
 
 ## Quick Start
 
@@ -24,6 +24,11 @@ Then, you can run whatever Typescript workflow you like under `scripts/` using:
 ```bash
 npx hardhat run scripts/<PARTNER_NAME>/<YOUR_SCRIPT> --network <`etherlinkTestnet` or `bscTestnet`>
 ```
+
+> **TIP** ✅
+> 
+> Refer to the README under the partner you want to test in `scripts/` to simply copy paste the run commands directly!
+
 
 ## Developer Guide
 
