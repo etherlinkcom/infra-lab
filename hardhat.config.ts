@@ -16,7 +16,11 @@ const config: HardhatUserConfig = {
     etherlinkTestnet: {
       url: "https://node.ghostnet.etherlink.com",
       accounts: [privateKey],
-    }
+    },
+    etherlink: {
+      url: "https://node.mainnet.etherlink.com",
+      accounts: [privateKey],
+    },
   },
   etherscan: {
     apiKey: {
@@ -29,6 +33,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://testnet-explorer.etherlink.com/api",
           browserURL: "https://testnet-explorer.etherlink.com"
+        }
+      },
+      {
+        network: "etherlink",
+        chainId: 42793,
+        urls: {
+          apiURL: "https://explorer.etherlink.com/api",
+          browserURL: "https://explorer.etherlink.com/"
         }
       },
     ]
