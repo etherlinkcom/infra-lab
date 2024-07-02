@@ -3,7 +3,21 @@ import web3 from 'web3';
 import { eth } from "web3";
 
 async function main() {
-  const entropyContract = await ethers.getContractAt("Entropy", "0x556CBf2f2cAac2781522c45fA9492Bcc6e343dB9")
+  // Deploying Pyth contract
+  console.log("Deploying contract...")
+  let entropyAddress: string
+  if (network.name === 'etherlinkTestnet') {
+    entropyAddress = "0x23f0e8FAeE7bbb405E7A7C3d60138FCfd43d7509";
+  } else if (network.name === "etherlink") {
+    entropyAddress = "0x23f0e8FAeE7bbb405E7A7C3d60138FCfd43d7509";
+  }
+  else {
+    throw new Error(`Unsupported network: ${network.name}`);
+  }
+  const EntropyFactory = await ethers.getContractFactory('Entropy')
+  const entropyContract = await EntropyFactory.deploy(entropyAddress)
+  await entropyContract.waitForDeployment()
+  console.log("Contract deployed!! Address:", await entropyContract.getAddress())
 
   // Running getRandomNumber function
   const randomNumber = web3.utils.randomHex(32)
