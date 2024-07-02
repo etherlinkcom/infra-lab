@@ -9,7 +9,7 @@ The scripts are independent, and can be run in any order.
 
 ## Price Feeds
 
-To run the price feeds script simply run
+To run the price feeds script on Etherlink Testnet simply run
 
 ```bash
 npx hardhat run scripts/Pyth/PriceFeed.ts --network etherlinkTestnet
@@ -29,7 +29,7 @@ Current BTC/USD Price: 6410018227334n e^ -8n | Publish Time: 1718964329
 
 ## Entropy Random Numbers
 
-To run the entropy script, simply run:
+To run the entropy script on Etherlink Testnet, simply run:
 
 ```bash
 npx hardhat run scripts/Pyth/Entropy.ts --network etherlinkTestnet
