@@ -1,5 +1,5 @@
 import { createPublicClient, http } from 'viem'
-import { etherlink } from 'viem/chains'
+import { etherlink, etherlinkTestnet } from 'viem/chains'
 
 
 
@@ -13,6 +13,15 @@ async function main() {
 
   const blockNumber = await client.getBlockNumber()
   console.log({ blockNumber })
+
+  const clientTestnet = createPublicClient({
+    chain: etherlinkTestnet,
+    transport: http(),
+  })
+
+  const blockNumberTestnet = await clientTestnet.getBlockNumber()
+  console.log({ blockNumberTestnet })
+
 }
 
 main()
